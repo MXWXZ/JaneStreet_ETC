@@ -132,6 +132,7 @@ def rescent_buy(exchange,message,data):
         car_price = sum(car[-30:]) / 30
         che_price = sum(che[-30:]) / 30
 
+        book = data.read_now_market()
         if 'BAT' in book:
             buyBAT, sellBAT = book['BAT']
         if 'CAR' in book:
@@ -139,7 +140,7 @@ def rescent_buy(exchange,message,data):
         if 'CHE' in book:
             buyCHE, sellCHE = book['CHE']
         if 'DBU' in book:
-            buyBDU, sellBDU = book['DBU']
+            buyBDU, sellBDU = book['BDU']
         if 'ALI' in book:
             buyALI, sellALI = book['ALI']
         if 'TCT' in book:
@@ -151,9 +152,9 @@ def rescent_buy(exchange,message,data):
             pos = list1.index(min(list1))
 
             if pos==0:
-                bot.buy_convert(exchange,'BAT', buyBAT[0][0] + 2, 10)
+                bot.buy_symbol(exchange,'BAT', buyBAT[0][0] + 2, 10)
             if pos==1:
-                bot.buy_convert(exchange,'CAR', buyCAR[0][0] + 2, 10)
+                bot.buy_symbol(exchange,'CAR', buyCAR[0][0] + 2, 10)
             if pos==2:
                 bot.buy_convert(exchange,'CHE', buyCHE[0][0] + 2, 10)
             if pos==3:
