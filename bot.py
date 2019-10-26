@@ -97,6 +97,8 @@ def main():
                 else:
                     bond_sell -= message['size']
                     sell_symbol(exchange, "BOND", 1001, message['size'])
+        elif message['type'] != 'book' and message['type'] != 'trade':
+            print("rep> ", message, file=sys.stderr)
 
 
 if __name__ == "__main__":
