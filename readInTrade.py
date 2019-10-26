@@ -11,7 +11,7 @@ bat = []
 
 def read_in_trade(exchange):
     count = 0
-    while (count < 1000):
+    while (count < 200):
         info = read_from_exchange(exchange)
         if not info:
             break
