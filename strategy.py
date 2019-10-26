@@ -54,11 +54,15 @@ def is_exchange_CHE_or_CAR(CHE_price,CAR_price):
 
 
 
+
+
 """
 下面这一段加到bot里面
 """
 
 data_now = Data()
 data_now.read_in_trade(exchange)
-bond,car,che,bdu,ali,tct,bat = data_now.get_data
+bond,car,che,bdu,ali,tct,bat = data_now.get_data()
+now_marketbuy, now_marketsell = data_now.read_now_market
+
 
