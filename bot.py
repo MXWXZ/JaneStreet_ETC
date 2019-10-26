@@ -11,6 +11,7 @@ import sys
 import socket
 import json
 from readInTrade import Data
+import strategy
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # replace REPLACEME with your team name!
@@ -101,17 +102,19 @@ def main():
                 f.write(str(book) + '\n')
             print("log> data writed!", file=sys.stderr)
 
-        if message['type'] == 'fill':
-            print("rep> ", message, file=sys.stderr)
-            if message['symbol'] == 'BOND':
-                if message['dir'] == 'BUY':
-                    buy_symbol(exchange, "BOND", 999, message['size'])
-                else:
-                    sell_symbol(exchange, "BOND", 1001, message['size'])
-        elif message['type'] == 'close':
+        # if message['type'] == 'fill':
+        #     print("rep> ", message, file=sys.stderr)
+        #     if message['symbol'] == 'BOND':
+        #         if message['dir'] == 'BUY':
+        #             buy_symbol(exchange, "BOND", 999, message['size'])
+        #         else:
+        #             sell_symbol(exchange, "BOND", 1001, message['size'])
+        if message['type'] == 'close':
             exit()
         elif message['type'] != 'book' and message['type'] != 'trade':
             print("rep> ", message, file=sys.stderr)
+
+        strategy.bond_buy_sell(exchange, message, data_now)
 
 
 if __name__ == "__main__":
