@@ -66,7 +66,7 @@ def is_exchange_CHE_or_CAR(CHE_price, CAR_price):
 
 
 def buy_sell_CHE_or_CAR(exchange, message, data):
-    if (message['type'] == 'fill') and ((message['symbol'] == 'CHE') or (message['symbol'] == 'CAR')):
+    if (message['type'] == 'trade') and ((message['symbol'] == 'CHE') or (message['symbol'] == 'CAR')):
         bond, car, che, bdu, ali, tct, bat = data.get_data()
         batprice = sum(bat[-30:]) / 30
         bong_price = sum(bond[-30:]) / 30
