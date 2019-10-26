@@ -15,36 +15,37 @@ def mean(l):
 
 
 def operate_car(exchange, message, data):
-    bond, car, che, bdu, ali, tct, bat = data.get_data()
-    tmp = 5
-    BAT_mean_price = mean(bat[-tmp:])
-    BOND_mean_price = mean(bond[-tmp:])
-    BDU_mean_price = mean(bdu[-tmp:])
-    ALI_mean_price = mean(ali[-tmp:])
-    TCT_mean_price = mean(tct[-tmp:])
+    if (message['type'] == 'trade') and (message['symbol'] == 'BAT'):
+        bond, car, che, bdu, ali, tct, bat = data.get_data()
+        tmp = 5
+        BAT_mean_price = mean(bat[-tmp:])
+        BOND_mean_price = mean(bond[-tmp:])
+        BDU_mean_price = mean(bdu[-tmp:])
+        ALI_mean_price = mean(ali[-tmp:])
+        TCT_mean_price = mean(tct[-tmp:])
 
-    size = 2
+        size = 2
 
-    if (10 * BAT_mean_price + 100 < (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
-        bot.buy_symbol(exchange, "BAT", BAT_mean_price + 1, 10 * size)
+        if (10 * BAT_mean_price + 100 < (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
+            bot.buy_symbol(exchange, "BAT", BAT_mean_price + 1, 10 * size)
 
-        bot.sell_convert(exchange, "BAT", 10 * size)
+            bot.sell_convert(exchange, "BAT", 10 * size)
 
-        bot.sell_symbol(exchange, "BOND", BOND_mean_price - 1, 3 * size)
-        bot.sell_symbol(exchange, "BDU", BDU_mean_price - 1, 2 * size)
-        bot.sell_symbol(exchange, "ALI", ALI_mean_price - 1, 3 * size)
-        bot.sell_symbol(exchange, "TCT", TCT_mean_price - 1, 2 * size)
+            bot.sell_symbol(exchange, "BOND", BOND_mean_price - 1, 3 * size)
+            bot.sell_symbol(exchange, "BDU", BDU_mean_price - 1, 2 * size)
+            bot.sell_symbol(exchange, "ALI", ALI_mean_price - 1, 3 * size)
+            bot.sell_symbol(exchange, "TCT", TCT_mean_price - 1, 2 * size)
 
-    elif (10 * BAT_mean_price - 100 > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
+        elif (10 * BAT_mean_price - 100 > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
 
-        bot.buy_symbol(exchange, "BOND", BOND_mean_price + 1, 3 * size)
-        bot.buy_symbol(exchange, "BDU", BDU_mean_price + 1, 2 * size)
-        bot.buy_symbol(exchange, "ALI", ALI_mean_price + 1, 3 * size)
-        bot.buy_symbol(exchange, "TCT", TCT_mean_price + 1, 2 * size)
+            bot.buy_symbol(exchange, "BOND", BOND_mean_price + 1, 3 * size)
+            bot.buy_symbol(exchange, "BDU", BDU_mean_price + 1, 2 * size)
+            bot.buy_symbol(exchange, "ALI", ALI_mean_price + 1, 3 * size)
+            bot.buy_symbol(exchange, "TCT", TCT_mean_price + 1, 2 * size)
 
-        bot.buy_convert(exchange, "BAT", 10 * size)
+            bot.buy_convert(exchange, "BAT", 10 * size)
 
-        bot.sell_symbol(exchange, "BAT", BAT_mean_price - 1, 10 * size)
+            bot.sell_symbol(exchange, "BAT", BAT_mean_price - 1, 10 * size)
 
 
 def is_exchange_CHE_or_CAR(CHE_price, CAR_price):
@@ -99,11 +100,11 @@ def buy_sell_CHE_or_CAR(exchange, message, data):
 
         if (len(car) > 0 and len(che) > 0 and ('CHE' in book) and ('CAR' in book)):
             flag, num = is_exchange_CHE_or_CAR(che_price, car_price)
-            if (flag == "Buy_CHE") and (num < 3):
-                bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 5)
-                bot.buy_convert(exchange, 'CHE', 7)
-                bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 1, 5)
-            if (flag == "Buy_CAR") and (num < 3):
-                bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 1, 5)
-                bot.buy_convert(exchange, 'CAR', 7)
-                bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 1, 5)
+            if (flag == "Buy_CHE") and (num < 5):
+                bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 7)
+                bot.buy_convert(exchange, 'CHE', 10)
+                bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 1, 7)
+            if (flag == "Buy_CAR") and (num < 5):
+                bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 1, 7)
+                bot.buy_convert(exchange, 'CAR', 10)
+                bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 1, 7)
