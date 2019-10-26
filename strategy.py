@@ -1,7 +1,18 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from readInTrade import Data
+import bot
+import sys
+
+
+def bond_buy_sell(exchange, message, data):
+    if message['type'] == 'fill':
+        print("rep> ", message, file=sys.stderr)
+        if message['symbol'] == 'BOND':
+            if message['dir'] == 'BUY':
+                bot.buy_symbol(exchange, "BOND", 999, message['size'])
+            else:
+                bot.sell_symbol(exchange, "BOND", 1001, message['size'])
 
 
 def mean_value():
@@ -53,13 +64,3 @@ def is_exchange_CHE_or_CAR(CHE_price, CAR_price):
         flag = "Buy_CAR"
 
     return flag, num
-
-
-"""
-下面这一段加到bot里面
-"""
-
-data_now = Data()
-data_now.read_in_trade(exchange)
-bond, car, che, bdu, ali, tct, bat = data_now.get_data()
-now_marketbuy, now_marketsell = data_now.read_now_market
