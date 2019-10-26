@@ -10,6 +10,7 @@ from __future__ import print_function
 import sys
 import socket
 import json
+from readInTrade import Data
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # replace REPLACEME with your team name!
@@ -75,11 +76,31 @@ def main():
     # exponential explosion in pending messages. Please, don't do that!
     print("rep> ", hello_from_exchange, file=sys.stderr)
 
+    data_now = Data()
+    data_cnt = 0
     buy_symbol(exchange, "BOND", 999, 50)
     sell_symbol(exchange, "BOND", 1001, 50)
 
     while True:
         message = read_from_exchange(exchange)
+
+        data_now.read_in_trade(message)
+        data_cnt += 1
+        if data_cnt == 1000:
+            bond, car, che, bdu, ali, tct, bat = data_now.get_data()
+            book = data_now.read_now_market()
+            data_cnt = 0
+            with open('log.log', 'a') as f:
+                f.write(str(bond) + '\n')
+                f.write(str(car) + '\n')
+                f.write(str(che) + '\n')
+                f.write(str(bdu) + '\n')
+                f.write(str(ali) + '\n')
+                f.write(str(tct) + '\n')
+                f.write(str(bat) + '\n')
+                f.write(str(book) + '\n')
+            print("log> data writed!", file=sys.stderr)
+
         if message['type'] == 'fill':
             print("rep> ", message, file=sys.stderr)
             if message['symbol'] == 'BOND':

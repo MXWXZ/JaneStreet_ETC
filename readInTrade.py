@@ -1,9 +1,4 @@
-import time
-from bot import read_from_exchange
-
-
-
-class Data():
+class Data:
     def __init__(self):
         self.bond = []
         self.car = []
@@ -12,82 +7,53 @@ class Data():
         self.ali = []
         self.tct = []
         self.bat = []
-        self.count = 0 
-        self.books= {}
-    
-    def get_data(self):
-        return self.bond,self.car,self.che,self.bdu,self.ali,self.tct,self.bat
+        self.books = {}
 
-    def read_now_market(self,book):
+    def get_data(self):
+        return self.bond, self.car, self.che, self.bdu, self.ali, self.tct, self.bat
+
+    def read_now_market(self):
         return self.books
 
-    def read_in_trade(self,exchange):
+    def read_in_trade(self, info):
+        type1 = info["type"]
 
-        info = read_from_exchange(exchange)
-        if not info:
-            return
-        type = info["type"]
-        if (type == "close"):
-            print("Server closed.")
-            return
+        if (type1 == "trade"):
 
-        if (self.count < 200):
-            if (type == "trade"):
-
-                if (info["symbol"] == "BOND"):
-                    self.bond.append(info["price"])
-
-                if (info["symbol"] == "CAR"):
-                    self.car.append(info["price"])
-
-                if (info["symbol"] == "CHE"):
-                    self.che.append(info["price"])
-
-                if (info["symbol"] == "BDU"):
-                    self.bdu.append(info["price"])
-
-                if (info["symbol"] == "ALI"):
-                    self.ali.append(info["price"])
-
-                if (info["symbol"] == "TCT"):
-                    self.tct.append(info["price"])
-
-                if (info["symbol"] == "BAT"):
-                    self.bat.append(info["price"])
-
-
-            self.count += 1
-        else:
-            if (type == "trade"):
-
-                if (info["symbol"] == "BOND"):
-                    self.bond.append(info["price"])
+            if (info["symbol"] == "BOND"):
+                if (len(self.bond) >= 50):
                     self.bond.remove(self.bond[0])
+                self.bond.append(info["price"])
 
-                if (info["symbol"] == "CAR"):
-                    self.car.append(info["price"])
+            if (info["symbol"] == "CAR"):
+                if (len(self.car) >= 50):
                     self.car.remove(self.car[0])
+                self.car.append(info["price"])
 
-                if (info["symbol"] == "CHE"):
-                    self.che.append(info["price"])
+            if (info["symbol"] == "CHE"):
+                if (len(self.che) >= 50):
                     self.che.remove(self.che[0])
+                self.che.append(info["price"])
 
-                if (info["symbol"] == "BDU"):
-                    self.bdu.append(info["price"])
+            if (info["symbol"] == "BDU"):
+                if (len(self.bdu) >= 50):
                     self.bdu.remove(self.bdu[0])
+                self.bdu.append(info["price"])
 
-                if (info["symbol"] == "ALI"):
-                    self.ali.append(info["price"])
+            if (info["symbol"] == "ALI"):
+                if (len(self.ali) >= 50):
                     self.ali.remove(self.ali[0])
+                self.ali.append(info["price"])
 
-                if (info["symbol"] == "TCT"):
-                    self.tct.append(info["price"])
+            if (info["symbol"] == "TCT"):
+                if (len(self.tct) >= 50):
                     self.tct.remove(self.tct[0])
+                self.tct.append(info["price"])
 
-                if (info["symbol"] == "BAT"):
-                    self.bat.append(info["price"])
+            if (info["symbol"] == "BAT"):
+                if (len(self.bat) >= 50):
                     self.bat.remove(self.bat[0])
+                self.bat.append(info["price"])
 
-        if (type == "book"):
-            self.books[info["symbol"]] = [info["buy"],info["sell"]]
-            
+        if (type1 == "book"):
+            self.books[info["symbol"]] = [info["buy"], info["sell"]]
