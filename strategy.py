@@ -143,7 +143,7 @@ def rescent_buy(exchange, message, data):
         if 'CHE' in book:
             buyCHE, sellCHE = book['CHE']
         if 'DBU' in book:
-            buyBDU, sellBDU = book['DBU']
+            buyBDU, sellBDU = book['BDU']
         if 'ALI' in book:
             buyALI, sellALI = book['ALI']
         if 'TCT' in book:
@@ -163,7 +163,7 @@ def rescent_buy(exchange, message, data):
             if pos == 2:
                 bot.buy_convert(exchange, 'CHE', buyCHE[0][0] + 2, 10)
             if pos == 3:
-                bot.buy_convert(exchange, 'DBU', buyDBU[0][0] + 2, 10)
+                bot.buy_convert(exchange, 'BDU', buyBDU[0][0] + 2, 10)
             if pos == 4:
                 bot.buy_convert(exchange, 'ALI', buyALI[0][0] + 2, 10)
             if pos == 5:
@@ -179,14 +179,11 @@ def rescent_buy(exchange, message, data):
             if pos == 2:
                 bot.sell_convert(exchange, 'CHE', sellCHE[0][0] - 2, 10)
             if pos == 3:
-                bot.sell_convert(exchange, 'DBU', sellDBU[0][0] - 2, 10)
+                bot.sell_convert(exchange, 'BDU', sellBDU[0][0] - 2, 10)
             if pos == 4:
                 bot.sell_convert(exchange, 'ALI', sellALI[0][0] - 2, 10)
             if pos == 5:
                 bot.sell_convert(exchange, 'TCT', sellTCT[0][0] - 2, 10)
-
-        # if 'BOND' in book:
-        #     buyBOND, sellBOND = book['BOND']
 
 
 def buy_sell_CHE_or_CAR(exchange, message, data):
