@@ -88,7 +88,7 @@ def main():
         data_cnt += 1
         if data_cnt == 100:
             bond, car, che, bdu, ali, tct, bat = data_now.get_data()
-            now_marketbuy, now_marketsell = data_now.read_now_market()
+            book = data_now.read_now_market()
             data_cnt = 0
             with open('log.log', 'a') as f:
                 f.write(str(bond) + '\n')
@@ -98,8 +98,7 @@ def main():
                 f.write(str(ali) + '\n')
                 f.write(str(tct) + '\n')
                 f.write(str(bat) + '\n')
-                f.write(str(now_marketbuy) + '\n')
-                f.write(str(now_marketsell) + '\n')
+                f.write(str(book) + '\n')
             print("log> data writed!", file=sys.stderr)
 
         if message['type'] == 'fill':
