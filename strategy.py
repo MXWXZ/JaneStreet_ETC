@@ -144,7 +144,7 @@ def rescent_buy(exchange, message, data):
                 bot.buy_symbol(exchange, 'TCT', buyTCT[0][0] + 2, 10)
 
         if max(list2) != -10000:
-            pos = list2.index(max(list1))
+            pos = list2.index(max(list2))
 
             if pos == 0:
                 bot.sell_symbol(exchange, 'BAT', sellBAT[0][0] - 2, 10)
