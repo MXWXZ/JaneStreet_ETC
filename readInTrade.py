@@ -1,8 +1,4 @@
-import time
-from bot import read_from_exchange
-
-
-class Data():
+class Data:
     def __init__(self):
         self.bond = []
         self.car = []
@@ -21,7 +17,6 @@ class Data():
 
     def read_in_trade(self, info):
         type1 = info["type"]
-
 
         if (type1 == "trade"):
 
