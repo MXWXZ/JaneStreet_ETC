@@ -30,8 +30,6 @@ exchange_hostname = "test-exch-" + \
     team_name if test_mode else prod_exchange_hostname
 
 idcnt = 1
-bond_buy = 0
-bond_sell = 0
 
 # ~~~~~============== NETWORKING CODE ==============~~~~~
 
@@ -52,28 +50,22 @@ def read_from_exchange(exchange):
 
 
 def sell_symbol(exchange, symbol, price, size):
-    global idcnt, bond_sell
+    global idcnt
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "SELL", "price": price, "size": size})
     idcnt += 1
-    if symbol == 'BOND':
-        bond_sell += size
 
 
 def buy_symbol(exchange, symbol, price, size):
-    global idcnt, bond_buy
+    global idcnt
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "BUY", "price": price, "size": size})
     idcnt += 1
-    if symbol == 'BOND':
-        bond_buy += size
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 
 def main():
-    global bond_buy, bond_sell
-
     exchange = connect()
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
     hello_from_exchange = read_from_exchange(exchange)
@@ -83,8 +75,8 @@ def main():
     # exponential explosion in pending messages. Please, don't do that!
     print("rep> ", hello_from_exchange, file=sys.stderr)
 
-    buy_symbol(exchange, "BOND", 999, 100)
-    sell_symbol(exchange, "BOND", 1001, 100)
+    buy_symbol(exchange, "BOND", 999, 50)
+    sell_symbol(exchange, "BOND", 1001, 50)
 
     while True:
         message = read_from_exchange(exchange)
@@ -92,10 +84,8 @@ def main():
             print("rep> ", message, file=sys.stderr)
             if message['symbol'] == 'BOND':
                 if message['dir'] == 'BUY':
-                    bond_buy -= message['size']
                     buy_symbol(exchange, "BOND", 999, message['size'])
                 else:
-                    bond_sell -= message['size']
                     sell_symbol(exchange, "BOND", 1001, message['size'])
         elif message['type'] != 'book' and message['type'] != 'trade':
             print("rep> ", message, file=sys.stderr)
