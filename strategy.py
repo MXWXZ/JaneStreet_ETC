@@ -88,17 +88,17 @@ def is_exchange_four_stocks(BAT_price, BOND_price, BDU_price, ALI_price, TCT_pri
         tmp = min(100 - BAT_NUM, 10 * tmp)
 
         # 取还可以买的bat数量和tmp的较小值
-        buy_symbol(exchange, 'BOND', BOND_price, 100 - BOND_NUM)
-        buy_symbol(exchange, 'BDU', BDU_price, 66 - BDU_NUM)
-        buy_symbol(exchange, 'ALI', ALI_price, 100 - ALI_NUM)
-        buy_symbol(exchange, 'TCT', TCT_price, 66 - TCT_NUM)
+        bot.buy_symbol(exchange, 'BOND', BOND_price, 100 - BOND_NUM)
+        bot.buy_symbol(exchange, 'BDU', BDU_price, 66 - BDU_NUM)
+        bot.buy_symbol(exchange, 'ALI', ALI_price, 100 - ALI_NUM)
+        bot.buy_symbol(exchange, 'TCT', TCT_price, 66 - TCT_NUM)
 
         tmp = int(min([(100 + BOND_NUM) / 3, (100 + BDU_NUM) / 2,
                        (100 + ALI_NUM) / 3, (100 + TCT_NUM) / 2]) / 1)
         if tmp > 45:
-            convert(exchange, 'BAT', BAT_price, tmp * 10)
+            bot.convert(exchange, 'BAT', BAT_price, tmp * 10)
 
-        sell_symbol(exchange, 'BAT', BAT_price, BAT_NUM)
+        bot.sell_symbol(exchange, 'BAT', BAT_price, BAT_NUM)
 
 
 
@@ -127,9 +127,9 @@ def buy_sell_CHE_or_CAR(exchange, message, data_now):
 
     if (len(car_price) > 0 and len(che_price) > 0):
         flag, num = is_exchange_CHE_or_CAR(che_price, car_price)
-        if (flag == "Buy_CHE"):
-            bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 10)
-            bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 1, 10)
-        else:
-            bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 1, 10)
-            bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 1, 10)
+        if (flag == "Buy_CHE") and (num<5):
+            bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 7)
+            bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 1, 7)
+        if (flag == "Buy_CAR") and (num<5):
+            bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 1, 7)
+            bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 1, 7)
