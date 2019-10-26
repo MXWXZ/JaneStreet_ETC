@@ -59,7 +59,7 @@ def buy_sell_CHE_or_CAR(exchange, message, data):
     [[4337, 1], [4338, 1], [4345, 1], [4355, 1]]
     """
 
-    if (len(car_price) > 0 and len(che_price) > 0 and ('CHE' in book) and ('CAR' in book)):
+    if (len(car) > 0 and len(che) > 0 and ('CHE' in book) and ('CAR' in book)):
         flag, num = is_exchange_CHE_or_CAR(che_price, car_price)
         if (flag == "Buy_CHE") and (num < 5):
             bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 7)
