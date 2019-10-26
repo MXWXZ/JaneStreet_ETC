@@ -99,6 +99,7 @@ def main():
 
         # strategy
         strategy.bond_buy_sell(exchange, message, data)
+        strategy.buy_sell_CHE_or_CAR(exchange, message, data)
 
 
 if __name__ == "__main__":

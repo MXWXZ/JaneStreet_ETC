@@ -99,18 +99,17 @@ def is_exchange_four_stocks(BAT_price, BOND_price, BDU_price, ALI_price, TCT_pri
         bot.sell_symbol(exchange, 'BAT', BAT_price, BAT_NUM)
 
 
-
-def buy_sell_CHE_or_CAR(exchange, message, data_now):
-    bond, car, che, bdu, ali, tct, bat = data_now.get_data()
+def buy_sell_CHE_or_CAR(exchange, message, data):
+    bond, car, che, bdu, ali, tct, bat = data.get_data()
     batprice = sum(bat[-30:]) / 30
     bong_price = sum(bond[-30:]) / 30
     bdu_price = sum(bdu[-30:]) / 30
     ali_price = sum(ali[-30:]) / 30
     tct_price = sum(tct[-30:]) / 30
-    car_price = sum(tct[-30:]) / 30
-    che_price = sum(tct[-30:]) / 30
+    car_price = sum(car[-30:]) / 30
+    che_price = sum(che[-30:]) / 30
 
-    book = data_now.read_now_market()
+    book = data.read_now_market()
     buyBAT, sellBAT = book['BAT']
     buyCAR, sellCAR = book['CAR']
     buyCHE, sellCHE = book['CHE']
@@ -125,11 +124,11 @@ def buy_sell_CHE_or_CAR(exchange, message, data_now):
 
     if (len(car_price) > 0 and len(che_price) > 0):
         flag, num = is_exchange_CHE_or_CAR(che_price, car_price)
-        if (flag == "Buy_CHE") and (num<5):
+        if (flag == "Buy_CHE") and (num < 5):
             bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 7)
-            bot.convert(exchange, 'CHE', 10)
+            bot.buy_convert(exchange, 'CHE', 10)
             bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 1, 7)
-        if (flag == "Buy_CAR") and (num<5):
+        if (flag == "Buy_CAR") and (num < 5):
             bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 1, 7)
-            bot.convert(exchange, 'CAR', 10)
+            bot.buy_convert(exchange, 'CAR', 10)
             bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 1, 7)
