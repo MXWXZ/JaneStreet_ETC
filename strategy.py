@@ -109,13 +109,16 @@ buyBDU,sellBDU = book['DBU']
 buyALI,sellALI = book['ALI']
 buyTCT,sellTCT = book['TCT']
 buyBOND,sellBOND = book['BOND']
-
+"""
+[[4316, 1], [4314, 1], [4311, 1], [4297, 1], [4294, 3], [4291, 2], [4286, 4]] 买一
+[[4337, 1], [4338, 1], [4345, 1], [4355, 1]] 卖一
+"""
 
 if (len(car_price)>0 and len(che_price)>0):
     flag, num = is_exchange_CHE_or_CAR(che_price,car_price)
     if (flag=="Buy_CHE"):
-        buy_symbol(exchange, 'CHE',buyCHE[1],10)
-        sell_symbol(exchange,'CAR',sellCAR[1],10)
+        buy_symbol(exchange, 'CHE',buyCHE[0][0] + 1,10)
+        sell_symbol(exchange,'CAR',sellCAR[0][0] - 1,10)
     else:
         pass
 
