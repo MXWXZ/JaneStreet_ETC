@@ -113,7 +113,7 @@ def main():
         data.read_in_trade(message)
 
         # strategy
-        # strategy.bond_buy_sell(exchange, message, data)
+        strategy.bond_buy_sell(exchange, message, data)
         strategy.operate_car(exchange, message, data)
         strategy.buy_sell_CHE_or_CAR(exchange, message, data)
         # strategy.rescent_buy(exchange, message, data)
