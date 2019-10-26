@@ -142,7 +142,7 @@ def rescent_buy(exchange, message, data):
             buyCAR, sellCAR = book['CAR']
         if 'CHE' in book:
             buyCHE, sellCHE = book['CHE']
-        if 'DBU' in book:
+        if 'BDU' in book:
             buyBDU, sellBDU = book['BDU']
         if 'ALI' in book:
             buyALI, sellALI = book['ALI']
