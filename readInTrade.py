@@ -27,32 +27,32 @@ class Data:
 
             if (info["symbol"] == "CAR"):
                 if (len(self.car) >= 50):
-                    self.car.remove(self.bond[0])
+                    self.car.remove(self.car[0])
                 self.car.append(info["price"])
 
             if (info["symbol"] == "CHE"):
                 if (len(self.che) >= 50):
-                    self.che.remove(self.bond[0])
+                    self.che.remove(self.che[0])
                 self.che.append(info["price"])
 
             if (info["symbol"] == "BDU"):
                 if (len(self.bdu) >= 50):
-                    self.bdu.remove(self.bond[0])
+                    self.bdu.remove(self.bdu[0])
                 self.bdu.append(info["price"])
 
             if (info["symbol"] == "ALI"):
                 if (len(self.ali) >= 50):
-                    self.ali.remove(self.bond[0])
+                    self.ali.remove(self.ali[0])
                 self.ali.append(info["price"])
 
             if (info["symbol"] == "TCT"):
                 if (len(self.tct) >= 50):
-                    self.tct.remove(self.bond[0])
+                    self.tct.remove(self.tct[0])
                 self.tct.append(info["price"])
 
             if (info["symbol"] == "BAT"):
                 if (len(self.bat) >= 50):
-                    self.bat.remove(self.bond[0])
+                    self.bat.remove(self.bat[0])
                 self.bat.append(info["price"])
 
         if (type1 == "book"):
