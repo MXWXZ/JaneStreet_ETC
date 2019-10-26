@@ -102,12 +102,20 @@ car_price = sum(tct[-30:])/30
 che_price = sum(tct[-30:])/30
 
 book = data_now.read_now_market()
-book['BAT'] 
+buyBAT,sellBAT = book['BAT'] 
+buyCAR,sellCAR = book['CAR']
+buyCHE,sellCHE = book['CHE']
+buyBDU,sellBDU = book['DBU']
+buyALI,sellALI = book['ALI']
+buyTCT,sellTCT = book['TCT']
+buyBOND,sellBOND = book['BOND']
+
 
 if (len(car_price)>0 and len(che_price)>0):
     flag, num = is_exchange_CHE_or_CAR(che_price,car_price)
     if (flag=="Buy_CHE"):
-        buy_symbol(exchange, 'CHE', BOND_price, 100 - BOND_NUM)
+        buy_symbol(exchange, 'CHE',buyCHE[1],10)
+        sell_symbol(exchange,'CAR',sellCAR[1],10)
     else:
         pass
 
