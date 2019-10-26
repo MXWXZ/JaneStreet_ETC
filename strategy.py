@@ -157,33 +157,33 @@ def rescent_buy(exchange, message, data):
             pos = list1.index(min(list1))
 
             if pos == 0:
-                bot.buy_convert(exchange, 'BAT', buyBAT[0][0] + 2, 10)
+                bot.buy_symbol(exchange, 'BAT', buyBAT[0][0] + 2, 10)
             if pos == 1:
-                bot.buy_convert(exchange, 'CAR', buyCAR[0][0] + 2, 10)
+                bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 2, 10)
             if pos == 2:
-                bot.buy_convert(exchange, 'CHE', buyCHE[0][0] + 2, 10)
+                bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 2, 10)
             if pos == 3:
-                bot.buy_convert(exchange, 'BDU', buyBDU[0][0] + 2, 10)
+                bot.buy_symbol(exchange, 'BDU', buyBDU[0][0] + 2, 10)
             if pos == 4:
-                bot.buy_convert(exchange, 'ALI', buyALI[0][0] + 2, 10)
+                bot.buy_symbol(exchange, 'ALI', buyALI[0][0] + 2, 10)
             if pos == 5:
-                bot.buy_convert(exchange, 'TCT', buyTCT[0][0] + 2, 10)
+                bot.buy_symbol(exchange, 'TCT', buyTCT[0][0] + 2, 10)
 
         if max(list2) != -100:
             pos = list2.index(max(list1))
 
             if pos == 0:
-                bot.sell_convert(exchange, 'BAT', sellBAT[0][0] - 2, 10)
+                bot.sell_symbol(exchange, 'BAT', sellBAT[0][0] - 2, 10)
             if pos == 1:
-                bot.sell_convert(exchange, 'CAR', sellCAR[0][0] - 2, 10)
+                bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 2, 10)
             if pos == 2:
-                bot.sell_convert(exchange, 'CHE', sellCHE[0][0] - 2, 10)
+                bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 2, 10)
             if pos == 3:
-                bot.sell_convert(exchange, 'BDU', sellBDU[0][0] - 2, 10)
+                bot.sell_symbol(exchange, 'BDU', sellBDU[0][0] - 2, 10)
             if pos == 4:
-                bot.sell_convert(exchange, 'ALI', sellALI[0][0] - 2, 10)
+                bot.sell_symbol(exchange, 'ALI', sellALI[0][0] - 2, 10)
             if pos == 5:
-                bot.sell_convert(exchange, 'TCT', sellTCT[0][0] - 2, 10)
+                bot.sell_symbol(exchange, 'TCT', sellTCT[0][0] - 2, 10)
 
 
 def buy_sell_CHE_or_CAR(exchange, message, data):
