@@ -82,6 +82,10 @@ def sell_convert(exchange, symbol, size):
     idcnt += 1
     return idcnt - 1
 
+
+def cancel_id(exchange, id):
+    write_to_exchange(exchange, {"type": "cancel", "order_id": id})
+
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 
