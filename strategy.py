@@ -149,10 +149,10 @@ def rescent_buy(exchange, message, data):
         if 'TCT' in book:
             buyTCT, sellTCT = book['TCT']
 
-        list1 = [is_buy(batprice), is_buy(bdu_price), is_buy(
-            ali_price), is_buy(tct_price), is_buy(car_price), is_buy(che_price)]
-        list2 = [is_sell(batprice), is_sell(bdu_price), is_sell(
-            ali_price), is_sell(tct_price), is_sell(car_price), is_sell(che_price)]
+        list1 = [is_buy(bat), is_buy(bdu), is_buy(
+            ali), is_buy(tct), is_buy(car), is_buy(che)]
+        list2 = [is_sell(bat), is_sell(bdu), is_sell(
+            ali), is_sell(tct), is_sell(car), is_sell(che)]
         if min(list1) != 100:
             pos = list1.index(min(list1))
 
