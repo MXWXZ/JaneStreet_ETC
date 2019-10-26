@@ -129,7 +129,9 @@ def buy_sell_CHE_or_CAR(exchange, message, data_now):
         flag, num = is_exchange_CHE_or_CAR(che_price, car_price)
         if (flag == "Buy_CHE") and (num<5):
             bot.buy_symbol(exchange, 'CHE', buyCHE[0][0] + 1, 7)
+            bot.convert(exchange, 'CHE', 10)
             bot.sell_symbol(exchange, 'CAR', sellCAR[0][0] - 1, 7)
         if (flag == "Buy_CAR") and (num<5):
             bot.buy_symbol(exchange, 'CAR', buyCAR[0][0] + 1, 7)
+            bot.convert(exchange, 'CAR', 10)
             bot.sell_symbol(exchange, 'CHE', sellCHE[0][0] - 1, 7)
