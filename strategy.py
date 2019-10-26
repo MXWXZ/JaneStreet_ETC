@@ -18,6 +18,8 @@ def operate_car(exchange, message, data):
     if (message['type'] == 'trade') and (message['symbol'] == 'BAT'):
         bond, car, che, bdu, ali, tct, bat = data.get_data()
         tmp = 5
+        if len(bat) == 0 or len(bond) == 0 or len(bdu) == 0 or len(ali) == 0 or len(tct) == 0:
+            return
         BAT_mean_price = mean(bat[-tmp:])
         BOND_mean_price = mean(bond[-tmp:])
         BDU_mean_price = mean(bdu[-tmp:])
