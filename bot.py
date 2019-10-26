@@ -56,6 +56,7 @@ def sell_symbol(exchange, symbol, price, size):
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "SELL", "price": price, "size": size})
     idcnt += 1
+    return idcnt - 1
 
 
 def buy_symbol(exchange, symbol, price, size):
@@ -63,6 +64,7 @@ def buy_symbol(exchange, symbol, price, size):
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "BUY", "price": price, "size": size})
     idcnt += 1
+    return idcnt - 1
 
 
 def buy_convert(exchange, symbol, size):
@@ -70,6 +72,7 @@ def buy_convert(exchange, symbol, size):
     write_to_exchange(exchange,
                       {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "BUY", "size": size})
     idcnt += 1
+    return idcnt - 1
 
 
 def sell_convert(exchange, symbol, size):
@@ -77,6 +80,7 @@ def sell_convert(exchange, symbol, size):
     write_to_exchange(exchange,
                       {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "SELL", "size": size})
     idcnt += 1
+    return idcnt - 1
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
