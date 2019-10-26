@@ -56,6 +56,7 @@ def sell_symbol(exchange, symbol, price, size):
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "SELL", "price": price, "size": size})
     idcnt += 1
+    return idcnt - 1
 
 
 def buy_symbol(exchange, symbol, price, size):
@@ -63,6 +64,7 @@ def buy_symbol(exchange, symbol, price, size):
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "BUY", "price": price, "size": size})
     idcnt += 1
+    return idcnt - 1
 
 
 def buy_convert(exchange, symbol, size):
@@ -70,6 +72,7 @@ def buy_convert(exchange, symbol, size):
     write_to_exchange(exchange,
                       {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "BUY", "size": size})
     idcnt += 1
+    return idcnt - 1
 
 
 def sell_convert(exchange, symbol, size):
@@ -77,6 +80,11 @@ def sell_convert(exchange, symbol, size):
     write_to_exchange(exchange,
                       {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "SELL", "size": size})
     idcnt += 1
+    return idcnt - 1
+
+
+def cancel_id(exchange, id):
+    write_to_exchange(exchange, {"type": "cancel", "order_id": id})
 
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
@@ -108,6 +116,7 @@ def main():
         strategy.bond_buy_sell(exchange, message, data)
         strategy.operate_car(exchange, message, data)
         strategy.buy_sell_CHE_or_CAR(exchange, message, data)
+        strategy.rescent_buy(exchange, message, data)
 
 
 if __name__ == "__main__":
