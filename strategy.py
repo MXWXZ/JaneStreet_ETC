@@ -1,11 +1,5 @@
 import bot
 import sys
-from collections import deque
-
-maxlen_de = 15
-
-positive_order = deque(maxlen=maxlen_de)
-negative_order = deque(maxlen=maxlen_de)
 
 
 def bond_buy_sell(exchange, message, data):
@@ -21,12 +15,6 @@ def mean(l):
 
 
 def operate_car(exchange, message, data):
-    if (message['type'] == 'reject'):
-        try:
-            positive_order.remove(message['order_id'])
-            negative_order.remove(message['order_id'])
-        except:
-            pass
     if (message['type'] == 'trade') and (message['symbol'] == 'BAT'):
         bond, car, che, bdu, ali, tct, bat = data.get_data()
         tmp = 5
@@ -41,43 +29,25 @@ def operate_car(exchange, message, data):
         size = 2
 
         if (10 * BAT_mean_price + 100 < (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
-            positive_order.append(bot.buy_symbol(
-                exchange, "BAT", BAT_mean_price + 1, 10 * size))
+            bot.buy_symbol(exchange, "BAT", BAT_mean_price + 1, 10 * size)
 
             bot.sell_convert(exchange, "BAT", 10 * size)
 
-            positive_order.append(bot.sell_symbol(
-                exchange, "BOND", BOND_mean_price - 1, 3 * size))
-            positive_order.append(bot.sell_symbol(
-                exchange, "BDU", BDU_mean_price - 1, 2 * size))
-            positive_order.append(bot.sell_symbol(
-                exchange, "ALI", ALI_mean_price - 1, 3 * size))
-            positive_order.append(bot.sell_symbol(
-                exchange, "TCT", TCT_mean_price - 1, 2 * size))
+            bot.sell_symbol(exchange, "BOND", BOND_mean_price - 1, 3 * size)
+            bot.sell_symbol(exchange, "BDU", BDU_mean_price - 1, 2 * size)
+            bot.sell_symbol(exchange, "ALI", ALI_mean_price - 1, 3 * size)
+            bot.sell_symbol(exchange, "TCT", TCT_mean_price - 1, 2 * size)
 
-        elif (10 * BAT_mean_price > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
-            for order_id in positive_order:
-                bot.cancel_id(exchange, order_id)
+        elif (10 * BAT_mean_price - 100 > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
 
-        if (10 * BAT_mean_price - 100 > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
-
-            negative_order.append(bot.buy_symbol(
-                exchange, "BOND", BOND_mean_price + 1, 3 * size))
-            negative_order.append(bot.buy_symbol(
-                exchange, "BDU", BDU_mean_price + 1, 2 * size))
-            negative_order.append(bot.buy_symbol(
-                exchange, "ALI", ALI_mean_price + 1, 3 * size))
-            negative_order.append(bot.buy_symbol(
-                exchange, "TCT", TCT_mean_price + 1, 2 * size))
+            bot.buy_symbol(exchange, "BOND", BOND_mean_price + 1, 3 * size)
+            bot.buy_symbol(exchange, "BDU", BDU_mean_price + 1, 2 * size)
+            bot.buy_symbol(exchange, "ALI", ALI_mean_price + 1, 3 * size)
+            bot.buy_symbol(exchange, "TCT", TCT_mean_price + 1, 2 * size)
 
             bot.buy_convert(exchange, "BAT", 10 * size)
 
-            negative_order.append(bot.sell_symbol(
-                exchange, "BAT", BAT_mean_price - 1, 10 * size))
-
-        elif (10 * BAT_mean_price < (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
-            for order_id in negative_order:
-                bot.cancel_id(exchange, order_id)
+            bot.sell_symbol(exchange, "BAT", BAT_mean_price - 1, 10 * size)
 
 
 def is_exchange_CHE_or_CAR(CHE_price, CAR_price):
