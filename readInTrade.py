@@ -27,12 +27,11 @@ class Data():
         if not info:
             return
         type = info["type"]
+        if (type == "close"):
+            print("Server closed.")
+            return
+
         if (self.count < 200):
- 
-            
-            if (type == "close"):
-                print("Server closed.")
-                return
             if (type == "trade"):
 
                 if (info["symbol"] == "BOND"):
@@ -59,9 +58,6 @@ class Data():
 
             self.count += 1
         else:
-            if (type == "close"):
-                print("Server closed.")
-                return
             if (type == "trade"):
 
                 if (info["symbol"] == "BOND"):
