@@ -29,6 +29,10 @@ port = 25000 + (test_exchange_index if test_mode else 0)
 exchange_hostname = "test-exch-" + \
     team_name if test_mode else prod_exchange_hostname
 
+idcnt = 1
+bond_buy = 0
+bond_sell = 0
+
 # ~~~~~============== NETWORKING CODE ==============~~~~~
 
 
@@ -47,7 +51,23 @@ def read_from_exchange(exchange):
     return json.loads(exchange.readline())
 
 
+def sell_symbol(exchange, symbol, price, size):
+    write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
+                                 "symbol": symbol, "dir": "SELL", "price": price, "size": size})
+    idcnt += 1
+    if symbol == 'BOND':
+        bond_sell += size
+
+
+def buy_symbol(exchange, symbol, price, size):
+    write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
+                                 "symbol": symbol, "dir": "BUY", "price": price, "size": size})
+    idcnt += 1
+    if symbol == 'BOND':
+        bond_buy += size
+
 # ~~~~~============== MAIN LOOP ==============~~~~~
+
 
 def main():
     exchange = connect()
@@ -57,21 +77,22 @@ def main():
     # time for every read_from_exchange() response.
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
-    print("The exchange replied:", hello_from_exchange, file=sys.stderr)
+    print("rep> ", hello_from_exchange, file=sys.stderr)
 
-    write_to_exchange(exchange, {"type": "add", "order_id": 1,
-                                 "symbol": "BOND", "dir": "BUY", "price": 999, "size": 100})
-    message = read_from_exchange(exchange)
-    print("The exchange replied:", message, file=sys.stderr)
-    write_to_exchange(exchange, {"type": "add", "order_id": 2,
-                                 "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 100})
-    message = read_from_exchange(exchange)
-    print("The exchange replied:", message, file=sys.stderr)
+    buy_symbol(exchange, "BOND", 999, 100)
+    sell_symbol(exchange, "BOND", 1001, 100)
 
     while True:
         message = read_from_exchange(exchange)
-        if 'fill' in message:
-            print("The exchange replied:", message, file=sys.stderr)
+        if message['type'] == 'fill':
+            print("rep> ", message, file=sys.stderr)
+            if message['symbol'] == 'BOND':
+                if message['dir'] == 'BUY':
+                    bond_buy -= message['size']
+                    buy_symbol(exchange, "BOND", 999, message['size'])
+                else:
+                    bond_sell -= message['size']
+                    sell_symbol(exchange, "BOND", 1001, message['size'])
 
 
 if __name__ == "__main__":
