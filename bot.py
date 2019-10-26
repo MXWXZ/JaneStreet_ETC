@@ -58,6 +58,14 @@ def main():
     # Since many write messages generate marketdata, this will cause an
     # exponential explosion in pending messages. Please, don't do that!
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
+    write_to_exchange(exchange, {"type": "add", "order_id": 1,
+                                 "symbol": "BOND", "dir": "BUY", "price": 999, "size": 1000})
+    write_to_exchange(exchange, {"type": "add", "order_id": 2,
+                                 "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 1000})
+
+    while True:
+        message = read_from_exchange(exchange)
+        print("The exchange replied:", message, file=sys.stderr)
 
 
 if __name__ == "__main__":
