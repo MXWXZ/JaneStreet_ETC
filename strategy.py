@@ -70,27 +70,31 @@ def is_exchange_CHE_or_CAR(CHE_price, CAR_price):
 
 def is_buy(price_list):
 
-    if len(price_list) < 5:
-        return 100
+    if len(price_list) < 9:
+        return 10000
     else:
         ratel = []
         for item in range(len(price_list[-7:-1])):
             ratel.append(
-                (price_list[item + 1] - price_list[item]))
+                (price_list[item + 1] - price_list[item]) / (price_list[item] + 1e-10))
         if (ratel[-1] < 0 and ratel[-2] < 0 and ratel[-3] < 0):
+            return sum(ratel) - 0.1
+        else:
             return sum(ratel)
 
 
 def is_sell(price_list):
 
-    if len(price_list) < 5:
-        return -100
+    if len(price_list) < 9:
+        return -10000
     else:
         ratel = []
         for item in range(len(price_list[-7:-1])):
             ratel.append(
-                (price_list[item + 1] - price_list[item]))
+                (price_list[item + 1] - price_list[item]) / (price_list[item] + 1e-10))
         if (ratel[-1] > 0 and ratel[-2] > 0 and ratel[-3] > 0):
+            return sum(ratel) + 0.1
+        else:
             return sum(ratel)
 
 
@@ -123,7 +127,7 @@ def rescent_buy(exchange, message, data):
             ali), is_buy(tct), is_buy(car), is_buy(che)]
         list2 = [is_sell(bat), is_sell(bdu), is_sell(
             ali), is_sell(tct), is_sell(car), is_sell(che)]
-        if min(list1) != 100:
+        if min(list1) != 10000:
             pos = list1.index(min(list1))
 
             if pos == 0:
@@ -139,7 +143,7 @@ def rescent_buy(exchange, message, data):
             if pos == 5:
                 bot.buy_symbol(exchange, 'TCT', buyTCT[0][0] + 2, 10)
 
-        if max(list2) != -100:
+        if max(list2) != -10000:
             pos = list2.index(max(list1))
 
             if pos == 0:
