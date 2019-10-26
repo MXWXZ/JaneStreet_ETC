@@ -77,10 +77,10 @@ def is_buy(price_list):
         for item in range(len(price_list[-7:-1])):
             ratel.append(
                 (price_list[item + 1] - price_list[item]) / (price_list[item] + 1e-10))
-        if (ratel[-1] < 0 and ratel[-2] < 0 and ratel[-3] < 0):
+        if (ratel[-1] < 0 and ratel[-2] < 0 and ratel[-3] < 0 and ratel[-4] < 0 and ratel[-5] < 0 and ratel[-6] < 0):
             return sum(ratel) - 0.1
         else:
-            return sum(ratel)
+            return 10000
 
 
 def is_sell(price_list):
@@ -95,7 +95,7 @@ def is_sell(price_list):
         if (ratel[-1] > 0 and ratel[-2] > 0 and ratel[-3] > 0):
             return sum(ratel) + 0.1
         else:
-            return sum(ratel)
+            return -10000
 
 
 def rescent_buy(exchange, message, data):

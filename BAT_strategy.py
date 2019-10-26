@@ -1,4 +1,8 @@
-import sell_symbol, buy_symbol, buy_convert, sell_convert, cancel_id
+import sell_symbol
+import buy_symbol
+import buy_convert
+import sell_convert
+import cancel_id
 from collections import deque
 
 maxlen_de = 15
@@ -7,9 +11,9 @@ positive_order = deque(maxlen=maxlen_de)
 negative_order = deque(maxlen=maxlen_de)
 
 
-
 def mean(l):
     return sum(l) // len(l)
+
 
 def operate_car(exchange, message, data):
     if (message['type'] == 'reject'):
@@ -47,18 +51,22 @@ def operate_car(exchange, message, data):
         TCT_buy_price = current_market['TCT'][0][0][0]
         TCT_sell_price = current_market['TCT'][1][0][0]
 
-
         size = 2
 
         if (10 * BAT_mean_price + 100 < (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
-            positive_order.append(buy_symbol(exchange, "BAT", BAT_buy_price+1, 10*size))
+            positive_order.append(buy_symbol(
+                exchange, "BAT", BAT_buy_price + 1, 10 * size))
 
-            sell_convert(exchange, "BAT", 10*size)
+            sell_convert(exchange, "BAT", 10 * size)
 
-            positive_order.append(sell_symbol(exchange, "BOND", BOND_sell_price-1, 3*size))
-            positive_order.append(sell_symbol(exchange, "BDU", BDU_sell_price-1, 2*size))
-            positive_order.append(sell_symbol(exchange, "ALI", ALI_sell_price-1, 3*size))
-            positive_order.append(sell_symbol(exchange, "TCT", TCT_sell_price-1, 2*size))
+            positive_order.append(sell_symbol(
+                exchange, "BOND", BOND_sell_price - 1, 3 * size))
+            positive_order.append(sell_symbol(
+                exchange, "BDU", BDU_sell_price - 1, 2 * size))
+            positive_order.append(sell_symbol(
+                exchange, "ALI", ALI_sell_price - 1, 3 * size))
+            positive_order.append(sell_symbol(
+                exchange, "TCT", TCT_sell_price - 1, 2 * size))
 
             for order_id in positive_order:
                 cancel_id(exchange, order_id)
@@ -67,17 +75,21 @@ def operate_car(exchange, message, data):
         #     for order_id in positive_order:
         #         cancel_id(exchange, order_id)
 
-
         if (10 * BAT_mean_price - 100 > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
 
-            negative_order.append(buy_symbol(exchange, "BOND", BOND_buy_price + 1, 3 * size))
-            negative_order.append(buy_symbol(exchange, "BDU", BDU_buy_price + 1, 2 * size))
-            negative_order.append(buy_symbol(exchange, "ALI", ALI_buy_price + 1, 3 * size))
-            negative_order.append(buy_symbol(exchange, "TCT", TCT_buy_price + 1, 2 * size))
+            negative_order.append(buy_symbol(
+                exchange, "BOND", BOND_buy_price + 1, 3 * size))
+            negative_order.append(buy_symbol(
+                exchange, "BDU", BDU_buy_price + 1, 2 * size))
+            negative_order.append(buy_symbol(
+                exchange, "ALI", ALI_buy_price + 1, 3 * size))
+            negative_order.append(buy_symbol(
+                exchange, "TCT", TCT_buy_price + 1, 2 * size))
 
-            buy_convert(exchange, "BAT", 10*size)
+            buy_convert(exchange, "BAT", 10 * size)
 
-            negative_order.append(sell_symbol(exchange, "BAT", BAT_sell_price - 1, 10*size))
+            negative_order.append(sell_symbol(
+                exchange, "BAT", BAT_sell_price - 1, 10 * size))
 
             for order_id in negative_order:
                 cancel_id(exchange, order_id)
