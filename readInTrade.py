@@ -12,7 +12,7 @@ class Data:
     def get_data(self):
         return self.bond, self.car, self.che, self.bdu, self.ali, self.tct, self.bat
 
-    def read_now_market(self, book):
+    def read_now_market(self):
         return self.books
 
     def read_in_trade(self, info):
