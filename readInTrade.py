@@ -13,17 +13,23 @@ class Data():
         self.tct = []
         self.bat = []
         self.count = 0 
+        self.books= {}
     
     def get_data(self):
         return self.bond,self.car,self.che,self.bdu,self.ali,self.tct,self.bat
 
+    def read_now_market(self,book):
+        return self.books
+
     def read_in_trade(self,exchange):
-        
+
+        info = read_from_exchange(exchange)
+        if not info:
+            return
+        type = info["type"]
         if (self.count < 200):
-            info = read_from_exchange(exchange)
-            if not info:
-                return
-            type = info["type"]
+ 
+            
             if (type == "close"):
                 print("Server closed.")
                 return
@@ -53,10 +59,6 @@ class Data():
 
             self.count += 1
         else:
-            info = read_from_exchange(exchange)
-            if not info:
-                return
-            type = info["type"]
             if (type == "close"):
                 print("Server closed.")
                 return
@@ -89,3 +91,7 @@ class Data():
                 if (info["symbol"] == "BAT"):
                     self.bat.append(info["price"])
                     self.bat.remove(self.bat[0])
+
+        if (type == "book"):
+            self.books[info["symbol"]] = [info["buy"],info["sell"]]
+            
