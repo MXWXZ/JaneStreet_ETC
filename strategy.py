@@ -76,7 +76,7 @@ def is_buy(price_list):
         ratel = []
         for item in range(len(price_list[-7:-1])):
             ratel.append(
-                (price_list[item + 1] - price_list[item]) / (price_list[item] + 1e-10))
+                (price_list[item + 1] - price_list[item]))
         if (ratel[-1] < 0 and ratel[-2] < 0 and ratel[-3] < 0):
             return sum(ratel)
 
@@ -89,7 +89,7 @@ def is_sell(price_list):
         ratel = []
         for item in range(len(price_list[-7:-1])):
             ratel.append(
-                (price_list[item + 1] - price_list[item]) / (price_list[item] + 1e-10))
+                (price_list[item + 1] - price_list[item]))
         if (ratel[-1] > 0 and ratel[-2] > 0 and ratel[-3] > 0):
             return sum(ratel)
 
