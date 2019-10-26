@@ -77,6 +77,7 @@ def main():
     print("rep> ", hello_from_exchange, file=sys.stderr)
 
     data_now = Data()
+    data_cnt = 0
     buy_symbol(exchange, "BOND", 999, 50)
     sell_symbol(exchange, "BOND", 1001, 50)
 
@@ -84,8 +85,22 @@ def main():
         message = read_from_exchange(exchange)
 
         data_now.read_in_trade(message)
-        bond, car, che, bdu, ali, tct, bat = data_now.get_data()
-        now_marketbuy, now_marketsell = data_now.read_now_market()
+        data_cnt += 1
+        if data_cnt == 100:
+            bond, car, che, bdu, ali, tct, bat = data_now.get_data()
+            now_marketbuy, now_marketsell = data_now.read_now_market()
+            data_cnt = 0
+            with open('log.log', 'a') as f:
+                f.write(str(bond) + '\n')
+                f.write(str(car) + '\n')
+                f.write(str(che) + '\n')
+                f.write(str(bdu) + '\n')
+                f.write(str(ali) + '\n')
+                f.write(str(tct) + '\n')
+                f.write(str(bat) + '\n')
+                f.write(str(now_marketbuy) + '\n')
+                f.write(str(now_marketsell) + '\n')
+            print("log> data writed!", file=sys.stderr)
 
         if message['type'] == 'fill':
             print("rep> ", message, file=sys.stderr)
