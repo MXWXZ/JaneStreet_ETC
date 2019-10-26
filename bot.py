@@ -86,7 +86,7 @@ def main():
 
         data_now.read_in_trade(message)
         data_cnt += 1
-        if data_cnt == 100:
+        if data_cnt == 1000:
             bond, car, che, bdu, ali, tct, bat = data_now.get_data()
             book = data_now.read_now_market()
             data_cnt = 0
