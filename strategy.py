@@ -74,8 +74,8 @@ def operate_car(exchange, message, data):
             positive_order.append(bot.sell_symbol(
                 exchange, "TCT", TCT_sell_price - 1, 2 * size))
 
-            for order_id in positive_order:
-                bot.cancel_id(exchange, order_id)
+            # for order_id in positive_order:
+            #     bot.cancel_id(exchange, order_id)
 
         # elif (10 * BAT_mean_price > (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
         #     for order_id in positive_order:
@@ -97,8 +97,8 @@ def operate_car(exchange, message, data):
             negative_order.append(bot.sell_symbol(
                 exchange, "BAT", BAT_sell_price - 1, 10 * size))
 
-            for order_id in negative_order:
-                bot.cancel_id(exchange, order_id)
+            # for order_id in negative_order:
+            #     bot.cancel_id(exchange, order_id)
 
         # elif (10 * BAT_mean_price < (3 * BOND_mean_price + 2 * BDU_mean_price + 3 * ALI_mean_price + 2 * TCT_mean_price)):
         #     for order_id in negative_order:
