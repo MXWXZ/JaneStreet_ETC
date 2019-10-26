@@ -15,12 +15,12 @@ def is_exchange_CHE_or_CAR(CHE_price, CAR_price):
     whether change CAR to CHE and how many is the least 
     """
     num = 0
-    flag = "Buy_CHE"
+    flag = "INVALID"
     if (CHE_price > CAR_price):
         num = 10 / (CHE_price - CAR_price)
         num = int(num + 1)
         flag = "Buy_CAR"
-    else:
+    elif (CHE_price < CAR_price):
         num = 10 / (CAR_price - CHE_price)
         num = int(num + 1)
         flag = "Buy_CHE"
@@ -39,7 +39,7 @@ def buy_sell_CHE_or_CAR(exchange, message, data):
     che_price = sum(che[-30:]) / 30
 
     book = data.read_now_market()
-    print(book)
+    # print(book)
     if 'BAT' in book:
         buyBAT, sellBAT = book['BAT']
     if 'CAR' in book:
