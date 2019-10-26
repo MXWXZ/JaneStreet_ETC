@@ -1,1 +1,1 @@
-while true; do ./bot.py; sleep 1; done
+while true; do ./bot.py; sleep 5; done
