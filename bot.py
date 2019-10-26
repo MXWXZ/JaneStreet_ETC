@@ -64,6 +64,13 @@ def buy_symbol(exchange, symbol, price, size):
                                  "symbol": symbol, "dir": "BUY", "price": price, "size": size})
     idcnt += 1
 
+
+def buy_convert(exchange, symbol, size):
+    global idcnt
+    write_to_exchange(exchange,
+                      {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "BUY", "size": size})
+    idcnt += 1
+
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 
@@ -77,44 +84,21 @@ def main():
     # exponential explosion in pending messages. Please, don't do that!
     print("rep> ", hello_from_exchange, file=sys.stderr)
 
-    data_now = Data()
-    data_cnt = 0
+    data = Data()
     buy_symbol(exchange, "BOND", 999, 50)
     sell_symbol(exchange, "BOND", 1001, 50)
 
     while True:
         message = read_from_exchange(exchange)
-
-        data_now.read_in_trade(message)
-        data_cnt += 1
-        if data_cnt == 1000:
-            bond, car, che, bdu, ali, tct, bat = data_now.get_data()
-            book = data_now.read_now_market()
-            data_cnt = 0
-            with open('log.log', 'a') as f:
-                f.write(str(bond) + '\n')
-                f.write(str(car) + '\n')
-                f.write(str(che) + '\n')
-                f.write(str(bdu) + '\n')
-                f.write(str(ali) + '\n')
-                f.write(str(tct) + '\n')
-                f.write(str(bat) + '\n')
-                f.write(str(book) + '\n')
-            print("log> data writed!", file=sys.stderr)
-
-        # if message['type'] == 'fill':
-        #     print("rep> ", message, file=sys.stderr)
-        #     if message['symbol'] == 'BOND':
-        #         if message['dir'] == 'BUY':
-        #             buy_symbol(exchange, "BOND", 999, message['size'])
-        #         else:
-        #             sell_symbol(exchange, "BOND", 1001, message['size'])
         if message['type'] == 'close':
             exit()
         elif message['type'] != 'book' and message['type'] != 'trade':
             print("rep> ", message, file=sys.stderr)
 
-        strategy.bond_buy_sell(exchange, message, data_now)
+        data.read_in_trade(message)
+
+        # strategy
+        strategy.bond_buy_sell(exchange, message, data)
 
 
 if __name__ == "__main__":

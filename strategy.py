@@ -6,13 +6,11 @@ import sys
 
 
 def bond_buy_sell(exchange, message, data):
-    if message['type'] == 'fill':
-        print("rep> ", message, file=sys.stderr)
-        if message['symbol'] == 'BOND':
-            if message['dir'] == 'BUY':
-                bot.buy_symbol(exchange, "BOND", 999, message['size'])
-            else:
-                bot.sell_symbol(exchange, "BOND", 1001, message['size'])
+    if message['type'] == 'fill' and message['symbol'] == 'BOND':
+        if message['dir'] == 'BUY':
+            bot.buy_symbol(exchange, "BOND", 999, message['size'])
+        else:
+            bot.sell_symbol(exchange, "BOND", 1001, message['size'])
 
 
 def mean_value():
