@@ -71,6 +71,13 @@ def buy_convert(exchange, symbol, size):
                       {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "BUY", "size": size})
     idcnt += 1
 
+
+def sell_convert(exchange, symbol, size):
+    global idcnt
+    write_to_exchange(exchange,
+                      {"type": "convert", "order_id": idcnt, "symbol": symbol, "dir": "SELL", "size": size})
+    idcnt += 1
+
 # ~~~~~============== MAIN LOOP ==============~~~~~
 
 
@@ -99,7 +106,7 @@ def main():
 
         # strategy
         strategy.bond_buy_sell(exchange, message, data)
-        # strategy.buy_sell_CHE_or_CAR(exchange, message, data)
+        strategy.buy_sell_CHE_or_CAR(exchange, message, data)
 
 
 if __name__ == "__main__":

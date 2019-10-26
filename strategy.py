@@ -39,7 +39,6 @@ def buy_sell_CHE_or_CAR(exchange, message, data):
     che_price = sum(che[-30:]) / 30
 
     book = data.read_now_market()
-    print(book)
     buyBAT, sellBAT = book['BAT']
     buyCAR, sellCAR = book['CAR']
     buyCHE, sellCHE = book['CHE']
