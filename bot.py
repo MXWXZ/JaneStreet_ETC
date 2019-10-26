@@ -87,6 +87,8 @@ def main():
                     buy_symbol(exchange, "BOND", 999, message['size'])
                 else:
                     sell_symbol(exchange, "BOND", 1001, message['size'])
+        elif message['type'] == 'close':
+            exit()
         elif message['type'] != 'book' and message['type'] != 'trade':
             print("rep> ", message, file=sys.stderr)
 
