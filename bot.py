@@ -63,6 +63,10 @@ def main():
                                  "symbol": "BOND", "dir": "BUY", "price": 999, "size": 100})
     message = read_from_exchange(exchange)
     print("The exchange replied:", message, file=sys.stderr)
+    write_to_exchange(exchange, {"type": "add", "order_id": 3,
+                                 "symbol": "BOND", "dir": "BUY", "price": 999, "size": 100})
+    message = read_from_exchange(exchange)
+    print("The exchange replied:", message, file=sys.stderr)
     write_to_exchange(exchange, {"type": "add", "order_id": 2,
                                  "symbol": "BOND", "dir": "SELL", "price": 1001, "size": 100})
     message = read_from_exchange(exchange)
