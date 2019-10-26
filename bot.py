@@ -52,6 +52,7 @@ def read_from_exchange(exchange):
 
 
 def sell_symbol(exchange, symbol, price, size):
+    global idcnt, bond_sell
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "SELL", "price": price, "size": size})
     idcnt += 1
@@ -60,6 +61,7 @@ def sell_symbol(exchange, symbol, price, size):
 
 
 def buy_symbol(exchange, symbol, price, size):
+    global idcnt, bond_buy
     write_to_exchange(exchange, {"type": "add", "order_id": idcnt,
                                  "symbol": symbol, "dir": "BUY", "price": price, "size": size})
     idcnt += 1
@@ -70,6 +72,8 @@ def buy_symbol(exchange, symbol, price, size):
 
 
 def main():
+    global bond_buy, bond_sell
+
     exchange = connect()
     write_to_exchange(exchange, {"type": "hello", "team": team_name.upper()})
     hello_from_exchange = read_from_exchange(exchange)
