@@ -60,11 +60,7 @@ def main():
     print("The exchange replied:", hello_from_exchange, file=sys.stderr)
 
     write_to_exchange(exchange, {"type": "add", "order_id": 1,
-                                 "symbol": "BOND", "dir": "BUY", "price": 999, "size": 100})
-    message = read_from_exchange(exchange)
-    print("The exchange replied:", message, file=sys.stderr)
-    write_to_exchange(exchange, {"type": "add", "order_id": 3,
-                                 "symbol": "BOND", "dir": "BUY", "price": 999, "size": 100})
+                                 "symbol": "BOND", "dir": "BUY", "price": 999, "size": 1000})
     message = read_from_exchange(exchange)
     print("The exchange replied:", message, file=sys.stderr)
     write_to_exchange(exchange, {"type": "add", "order_id": 2,
