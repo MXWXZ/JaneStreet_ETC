@@ -101,5 +101,13 @@ tct_price = sum(tct[-30:])/30
 car_price = sum(tct[-30:])/30
 che_price = sum(tct[-30:])/30
 
-num,flag = is_exchange_four_stocks()
+book = data_now.read_now_market()
+book['BAT'] 
+
+if (len(car_price)>0 and len(che_price)>0):
+    flag, num = is_exchange_CHE_or_CAR(che_price,car_price)
+    if (flag=="Buy_CHE"):
+        buy_symbol(exchange, 'CHE', BOND_price, 100 - BOND_NUM)
+    else:
+        pass
 
